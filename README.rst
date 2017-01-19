@@ -4,6 +4,19 @@ Be10/Be15 calculation engine wrapper for Python
 This Python library is designed to allow easy usage of the Be10 and Be15 calculation engines from Python.
 Notice that the python interpreter must be 32 bit!
 
+Install
+-------
+
+From the command line:
+
+.. code::
+pip install beeng
+
+Or
+
+.. code::
+py -m pip install beeng
+
 Example
 -------
 
