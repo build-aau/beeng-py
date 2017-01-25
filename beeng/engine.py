@@ -69,9 +69,14 @@ class Engine:
         self.engine = ctypes.windll.LoadLibrary(file_name)
         # Check license if valid
         if self.check_for_valid_license == True:
-            is_valid = self.is_license_valid()
-            if is_valid == False:
-                raise Exception('Missing a valid license for the DLL')
+            try:
+                is_valid = self.is_license_valid()
+                if is_valid == False:
+                    raise Exception('Missing a valid license for the DLL')
+            except AttributeError as Ex:
+                logging.debug(Ex)
+                logging.warning('It is not possible to check if the license is valid so check_for_valid_license will be set to false (Too old engine)')
+                check_for_valid_license = False
 
     def unload_engine(self):
         """

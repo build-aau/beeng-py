@@ -7,10 +7,6 @@ logging.basicConfig(level=logging.DEBUG)
 mylogger = logging.getLogger()
 
 
-def load_engine():
-    return beeng.Engine()
-
-
 def process_model(eng, path):
     # type: (beeng.Engine, str) -> None
     model = eng.load_model(path)
@@ -21,7 +17,20 @@ def process_model(eng, path):
 
 
 def test_1():
-    eng = load_engine()
+    """
+    Tests that the engine can be found automatically and results can be produced
+    """
+    eng = beeng.Engine()
+    process_model(eng, 'test-data/Eksempel_v8_Administration.xml')
+    process_model(eng, 'test-data/Eksempel_v8_Etagehus.xml')
+    process_model(eng, 'test-data/Eksempel_v8_Parcelhus.xml')
+
+
+def test_2():
+    """
+    Tests legacy support (Be10)
+    """
+    eng = beeng.Engine(r'C:\Program Files (x86)\SBi\Be10 v7\Be10Eng.dll')
     process_model(eng, 'test-data/Eksempel_v8_Administration.xml')
     process_model(eng, 'test-data/Eksempel_v8_Etagehus.xml')
     process_model(eng, 'test-data/Eksempel_v8_Parcelhus.xml')
