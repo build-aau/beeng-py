@@ -54,10 +54,12 @@ Supported functions
 
 The following functions from the DLL can be used:
 
-================== ============= ===========================================================================
- Function           Return        Comment
-================== ============= ===========================================================================
- get_key_xml        (bool, str)   The bool indicates success and the str contains the key xml data
- get_res_xml        (bool, str)   The bool indicates success and the str contains the results xml data
- is_license_valid   bool          The bool indicates if a valid license is available (True = valid license)
-================== ============= ===========================================================================
+==================== ============= ===================================================================================================================================
+ Function             Return        Comment
+==================== ============= ===================================================================================================================================
+ get_key_xml          (bool, str)   The bool indicates success and the str contains the key xml data
+ get_res_xml          (bool, str)   The bool indicates success and the str contains the results xml data
+ get_summer_comfort   (bool, str)   The bool indicates success and the str contains the summer comfort temperature xml data for each hour of every day the whole year
+ is_license_valid     bool          The bool indicates if a valid license is available (True = valid license) (Supported from version 8.17.1.17 and forward)
+==================== ============= ===================================================================================================================================
+

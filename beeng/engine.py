@@ -147,11 +147,54 @@ class Engine:
         # Return result
         return res_code != 0, key_xml
 
+    def get_summer_comfort(self, project_path):
+        # type: (str) -> (bool, str)
+        """
+        This function returns the summer comfort temperatures for each hour of every day the whole year
+        """
+        # Prepare arguments
+        if sys.version_info < (3, 0):
+            # python2
+            path = ctypes.create_string_buffer(project_path)
+        else:
+            # python3
+            path = ctypes.create_string_buffer(project_path.encode(TEXT_CODEC))
+        # Construct path to target file
+        target_path = os.path.splitext(project_path)[0] + '_tmp.xml'
+        # Call function
+        res_code = self.engine.Be06Temp(path)
+        # Handle results
+        if res_code == 0:
+            # Check if the resulting file exists
+            if os.path.exists(target_path):
+                # Read the file
+                with open(target_path, 'r') as file:
+                    data = file.read()
+                # Clean up
+                os.remove(target_path)
+                # Return result
+                return True, data
+            else:
+                logging.error('Results file was not found. Something went wrong in the calculation engine.')
+                return False, ''
+        else:
+            # Handle error cases
+            if os.path.exists(target_path):
+                os.remove(target_path)
+            if res_code == 2:
+                logging.error('The building is non-residential')
+            elif res_code == 3:
+                logging.error('There was a problem with the climate data')
+            else:
+                logging.error('Unknown error. Return code: {}'.format(res_code))
+            return False, ''
+
     def is_license_valid(self):
         # type: () -> bool
         """
-        This function checks whether a valid license is found
-        :return:
+        This function checks whether a valid license is found.
+        Supported from version 8.17.1.17 and forward.
+        :return: true if license is valid
         """
         # Call function
         res_code = self.engine.IsLicenseValid()

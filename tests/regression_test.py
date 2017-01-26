@@ -34,3 +34,21 @@ def test_2():
     process_model(eng, 'test-data/Eksempel_v8_Administration.xml')
     process_model(eng, 'test-data/Eksempel_v8_Etagehus.xml')
     process_model(eng, 'test-data/Eksempel_v8_Parcelhus.xml')
+
+
+def test_3():
+    """
+    Tests summer comfort
+    """
+    # Get engine
+    eng = beeng.Engine()
+    # Positive test
+    success, data = eng.get_summer_comfort('test-data/Eksempel_v8_Parcelhus.xml')
+    assert success == True
+    assert isinstance(data, str)
+    assert len(data.strip()) > 0
+    # Negative test
+    success, data = eng.get_summer_comfort('test-data/Eksempel_v8_Administration.xml')
+    assert success == False
+    assert isinstance(data, str)
+    assert len(data) == 0
